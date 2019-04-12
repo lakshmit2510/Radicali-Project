@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="is_called" content="false">
+    
+    <title>Mica - Policy Schema</title>
+    <link rel="shortcut icon" href="assets/static/images/favicon.ico"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    
+    <style>
+      #loader {
+        transition: all 0.3s ease-in-out;
+        opacity: 1;
+        visibility: visible;
+        position: fixed;
+        height: 100vh;
+        width: 100%;
+        background: #fff;
+        z-index: 90000;
+      }
+
+      #loader.fadeOut {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: calc(50% - 20px);
+        left: calc(50% - 20px);
+        background-color: #333;
+        border-radius: 100%;
+        -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+        animation: sk-scaleout 1.0s infinite ease-in-out;
+      }
+
+      @-webkit-keyframes sk-scaleout {
+        0% { -webkit-transform: scale(0) }
+        100% {
+          -webkit-transform: scale(1.0);
+          opacity: 0;
+        }
+      }
+
+      @keyframes sk-scaleout {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        } 100% {
+          -webkit-transform: scale(1.0);
+          transform: scale(1.0);
+          opacity: 0;
+        }
+      }
+    </style>
+
+    <script type="text/javascript">
+      if(localStorage["logged_in"] != "true"){
+        window.location.href = "index.html";
+      }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js" type='text/javascript'></script>
+
+    <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+
+    <script type="text/javascript">
+      var turndownService = new TurndownService({headingStyle: "atx"});
+    </script>
+
+  </head>
+
+  <body class="app">
+    <!-- @TOC -->
+    <!-- =================================================== -->
+    <!--
+      + @Page Loader
+      + @App Content
+          - #Left Sidebar
+              > $Sidebar Header
+              > $Sidebar Menu
+
+          - #Main
+              > $Topbar
+              > $App Screen Content
+    -->
+
+    <!-- @Page Loader -->
+    <!-- =================================================== -->
+    <div id='loader'>
+      <div class="spinner"></div>
+    </div>
+
+    <script>
+      window.addEventListener('load', () => {
+        const loader = document.getElementById('loader');
+        setTimeout(() => {
+          loader.classList.add('fadeOut');
+        }, 100);
+      });
+
+    </script>
+
+    <!-- @App Content -->
+    <!-- =================================================== -->
+    <div>
+      <!-- #Left Sidebar ==================== -->
+
+      <div id = "sidebar-placeholder">
+      </div>
+
+      <script type="text/javascript">
+        
+          $(function(){
+            if (localStorage["mica_version"] == "Lite"){
+              $("#sidebar-placeholder").load("sidebar_lite.html");
+            }
+            else if (localStorage["mica_version"] == "Premium"){
+              $("#sidebar-placeholder").load("sidebar_premium.html");
+            }
+          });
+
+      </script>
+
+      <!-- #Main ============================ -->
+      <div class="page-container">
+        
+        <div id = "nav-placeholder">
+        </div>
+
+        <script type="text/javascript">
+          $(function(){
+            $("#nav-placeholder").load("nav.html");
+          });
+        </script>
+
+        <!-- ### $App Screen Content ### -->
+        <main class='main-content'>
+          <div id='mainContent'>
+            <h3 class="bgc-white" style="text-align: center">Policy Schema</h3>
+            
+            <table id="policy-list" class="display" style="width:100%">
+            </table>
+            
+            <button type="button" class="policy-create r-10 t-2 btn bdrs-50p p-0 w-3r h-3r btn-primary"> <i class="ti-plus"></i> </button>
+          
+          </div>
+        </main>
+
+        <script>
+          window.onload = function() {
+            policyOnload();
+          };
+        </script>
+
+      </div>
+    </div>
+
+    <!-- Editor popup Modal -->
+    <div class="modal fade" id="editorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <textarea placeholder="Enter Note here..." class="form-control" id="policy-markdown"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary save-editor-changes" data-dismiss="modal">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="editorModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <textarea placeholder="Enter Title here..." class="form-control" id="policy-title-create"></textarea> <br/>
+            <textarea placeholder="Enter Activity/Risk here..." class="form-control" id="policy-activity-create"></textarea> <br/>
+            <textarea placeholder="Enter Region/Country here..." class="form-control" id="policy-region-create"></textarea> <br/>
+            <textarea placeholder="Enter Note here..." class="form-control" id="policy-markdown-create"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary save-editor-changes" data-dismiss="modal">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

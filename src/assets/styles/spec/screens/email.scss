@@ -1,0 +1,97 @@
+.email-app {
+  .email-side-nav {
+    background: $default-white;
+    position: fixed;
+    border-right: 1px solid $border-color;
+    float: left;
+    width: 250px;
+    transition: all 0.3s ease-in-out;
+
+    @include to($breakpoint-md) {
+      z-index: 1;
+      left: -250px;
+    }
+  }
+
+  .email-wrapper {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-overflow: ellipsis;
+    min-height: 100%;
+    transition: all 0.3s ease-in-out;
+
+    @include to($breakpoint-md) {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    @include from($breakpoint-md) {
+      margin-left: 250px;
+    }
+
+    .email-list {
+      position: relative;
+      padding: 0;
+      width: 100%;
+      overflow-y: hidden;
+      background-color: $default-white;
+      height: calc(100vh - #{$header-height});
+
+      @include to($breakpoint-md) {
+        max-height: calc(100vh - 65px);
+      }
+
+      @include from($breakpoint-md) {
+        width: 40%;
+        border-right: 1px solid $border-color;
+        float: left;
+      }
+    }
+
+    .regulation-content {
+      float: left;
+      width: 40%;
+      position: relative;
+      padding: 0;
+      background-color: $default-white;
+
+      // min-height: calc(100vh - #{$header-height});
+    }
+
+    .policy-content {
+      float: left;
+      width: 40%;
+      position: relative;
+      padding: 0;
+      background-color: $default-white;
+      // min-height: calc(100vh - #{$header-height});
+    }
+
+      .email-compose {
+        position: relative;
+      .email-compose-body {
+        padding: 30px 20px;
+
+      }
+      }
+    }
+
+
+    &.side-active {
+      .email-side-nav {
+        @include to($breakpoint-md) {
+          left: 0;
+        }
+      }
+
+      .email-wrapper {
+        @include to($breakpoint-md) {
+          left: 250px;
+        }
+      }
+    }
+}

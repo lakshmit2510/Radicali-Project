@@ -1,0 +1,11 @@
+require('./datatables.min.js');
+require('./global/jqueryUtils')
+require('./global/obligation.js');
+require('./global/clause.js');
+require('./global/regulation.js');
+require('./global/policy.js');
+require('./global/mapping.js');
+require('./global/user.js');
+require('./global/regulationMapping.js');
+require('./global/policyMapping.js');
+require('./global/utils');
